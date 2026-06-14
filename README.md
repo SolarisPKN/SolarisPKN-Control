@@ -1,72 +1,139 @@
-# Solaris PKN Control
+# SolarisPKN-Control
 
-Control remoto para PC basado en ESP32 y Arduino IoT Cloud.
+🇺🇸 English | 🇦🇷 [Español](README.es.md)
 
-## ¿Qué hace?
+## Overview
 
-Solaris PKN Control permite controlar una computadora de forma remota utilizando un ESP32 conectado al conector Power SW de la motherboard.
+SolarisPKN-Control is a remote PC power management solution based on ESP32 and Arduino IoT Cloud.
 
-A diferencia de otros proyectos similares, no requiere utilizar el conector Reset SW. Todo el control se realiza simulando las mismas acciones que haría un usuario al presionar físicamente el botón de encendido del gabinete.
+The project allows a computer to be powered on, shut down, or forcefully powered off remotely by simulating physical presses of the motherboard's Power Switch (Power SW) button.
 
-## Funciones
+Unlike many similar solutions, SolarisPKN-Control does not require the Reset SW header. All actions are performed using the Power SW connector, reproducing the same behavior as pressing the physical power button on the computer case.
 
-### Encendido y apagado normal
+## Current Status
 
-Cuando se activa un pulso corto, el ESP32 cierra momentáneamente el circuito Power SW durante aproximadamente 500 ms.
+⚠️ This project is functional and under active development.
 
-Este comportamiento equivale a presionar brevemente el botón de encendido del gabinete.
+Current implementation:
 
-Dependiendo del estado actual del sistema operativo, esto permite:
+* Remote power-on.
+* Normal shutdown request.
+* Forced shutdown.
+* Arduino IoT Cloud integration.
+* ESP32-based control.
 
-* Encender la PC.
-* Solicitar un apagado normal.
-* Reanudar desde estados compatibles.
+Future improvements may include additional monitoring, automation, and remote management capabilities.
 
-### Apagado forzado
+## Features
 
-Cuando se activa un pulso largo, el ESP32 mantiene cerrado el circuito Power SW durante aproximadamente 15 segundos.
+### Power On / Normal Shutdown
 
-Este comportamiento equivale a mantener presionado el botón de encendido del gabinete hasta que la motherboard fuerce el apagado del equipo.
+A short pulse closes the Power SW circuit for approximately 500 ms.
 
-Esta función resulta útil cuando:
+This simulates a standard press of the computer's power button and can be used to:
 
-* El sistema operativo se bloquea.
-* No existe acceso remoto.
-* La PC deja de responder.
+* Power on the system.
+* Request a normal operating system shutdown.
+* Resume compatible sleep states.
 
-### Estado de la PC
+### Forced Shutdown
 
-El sistema utiliza una línea de feedback conectada al ESP32 para detectar si la computadora se encuentra encendida o apagada.
+A long pulse closes the Power SW circuit for approximately 15 seconds.
 
-La información se muestra en Arduino IoT Cloud y permite conocer el estado real del equipo.
+This reproduces the behavior of holding the physical power button until the motherboard forces a shutdown.
 
-## Características técnicas
+Useful when:
+
+* The operating system becomes unresponsive.
+* Remote access is unavailable.
+* The computer freezes.
+
+## Hardware Requirements
 
 * ESP32
+* Relay module or optocoupler
+* Motherboard Power SW header connection
+* Power supply for ESP32
+
+## Software Requirements
+
+* Arduino IDE
 * Arduino IoT Cloud
-* Actualizaciones OTA
-* Detección de estado de la PC
-* Debounce para evitar falsas detecciones
-* Optimización energética del ESP32
-* Compatible con asistentes de voz mediante automatizaciones de Arduino Cloud
+* ESP32 Board Package
 
-## Hardware requerido
+## Technical Characteristics
 
-* ESP32
-* 1 relé o módulo optoacoplado
-* Conexión al header Power SW de la motherboard
-* Fuente de alimentación para el ESP32
+* ESP32-based controller
+* Cloud-managed operation
+* Single-control-line design
+* Low hardware complexity
+* Compatible with standard PC motherboards
 
-## Ventajas
+## Advantages
 
-* No utiliza el conector Reset SW.
-* Solo requiere una salida de control.
-* Instalación sencilla.
-* Menor cantidad de cableado.
-* Comportamiento idéntico al botón físico del gabinete.
+* Does not require Reset SW.
+* Simple installation.
+* Minimal wiring.
+* Replicates real physical button behavior.
+* Suitable for remote management environments.
 
-## Autor
+## Real-World Use Case
 
-Desarrollado por PabloKoutaNya.
+SolarisPKN-Control was designed to complement a low-power remote access environment.
 
-Proyecto perteneciente al ecosistema Solaris PKN Control.
+In my setup, I use a laptop as my primary remote access device. Through a VPN connection, I access my home network and connect to my desktop computer using Sunshine and compatible GameStream clients.
+
+One common issue with this type of setup is that the main computer must remain powered on 24/7 to be available.
+
+SolarisPKN-Control eliminates that requirement.
+
+### Workflow
+
+1. Connect to the home network through VPN.
+2. Access Arduino IoT Cloud.
+3. Trigger the power-on pulse.
+4. ESP32 simulates a Power SW button press.
+5. The computer starts normally.
+6. Connect using Sunshine.
+7. Shut down normally or perform a forced shutdown if required.
+
+## Applications
+
+* Remote gaming
+* Streaming
+* Homelabs
+* Remote workstations
+* Personal servers
+* Backup systems
+* Test environments
+
+## Repository
+
+GitHub:
+
+https://github.com/SolarisPKN
+
+## Author
+
+Developed by SolarisPKN.
+
+Part of the SolarisPKN ecosystem.
+
+## Roadmap
+
+### Current
+
+* Remote power control
+* Arduino IoT Cloud integration
+
+### Planned
+
+* Documentation improvements
+* Wiring diagrams
+* PCB design
+* Monitoring capabilities
+* Automation features
+
+## License
+
+License information will be defined in a future release.
