@@ -1,139 +1,170 @@
-# SolarisPKN-Control
+<p align="right">
+🇺🇸 English | 🇪🇸 Español
+</p>
 
-🇺🇸 English | 🇦🇷 [Español](README.es.md)
+# ⚡ SolarisPKN-Control
 
-## Overview
+## 🌐 English
 
-SolarisPKN-Control is a remote PC power management solution based on ESP32 and Arduino IoT Cloud.
+🚀 **SolarisPKN-Control** is a remote PC power control system based on ESP32 + Arduino IoT Cloud.
 
-The project allows a computer to be powered on, shut down, or forcefully powered off remotely by simulating physical presses of the motherboard's Power Switch (Power SW) button.
+It allows you to turn on, shut down, or force shutdown a computer by simulating the real behavior of the motherboard **Power SW button**, without requiring any software installed on the host system.
 
-Unlike many similar solutions, SolarisPKN-Control does not require the Reset SW header. All actions are performed using the Power SW connector, reproducing the same behavior as pressing the physical power button on the computer case.
+This project is part of the **SolarisPKN ecosystem**, focused on building automation, remote control, and infrastructure tools for gaming, streaming, and homelab environments.
 
-## Current Status
+---
 
-⚠️ This project is functional and under active development.
+## 🎯 Project Goal
 
-Current implementation:
+The goal of SolarisPKN-Control is to enable safe, efficient, and low-power remote physical control of a PC, eliminating the need to keep the system running 24/7.
 
-* Remote power-on.
-* Normal shutdown request.
-* Forced shutdown.
-* Arduino IoT Cloud integration.
-* ESP32-based control.
+---
 
-Future improvements may include additional monitoring, automation, and remote management capabilities.
+## ✨ Features
 
-## Features
+- ⚡ Remote PC power-on
+- 🔌 Normal shutdown via short pulse
+- 🛑 Forced shutdown via long press simulation
+- ☁️ Arduino IoT Cloud integration
+- 📡 ESP32-based control system
+- 🧠 Low-power optimized firmware
+- 🔁 Non-blocking relay state machine
+- 🧩 Modular and configurable architecture
 
-### Power On / Normal Shutdown
+---
 
-A short pulse closes the Power SW circuit for approximately 500 ms.
+## 🔌 How it works
 
-This simulates a standard press of the computer's power button and can be used to:
+The system simulates two physical button behaviors:
 
-* Power on the system.
-* Request a normal operating system shutdown.
-* Resume compatible sleep states.
+### 🔘 Short pulse (500ms)
+Equivalent to a normal press of the power button:
 
-### Forced Shutdown
+- Turn on the PC
+- Request OS shutdown
+- Resume from sleep (depending on BIOS/OS settings)
 
-A long pulse closes the Power SW circuit for approximately 15 seconds.
+### 🔴 Long pulse (15s)
+Equivalent to holding the physical button:
 
-This reproduces the behavior of holding the physical power button until the motherboard forces a shutdown.
+- Forces system shutdown
+- Used for system freezes or unresponsive states
+- Independent from operating system
 
-Useful when:
+---
 
-* The operating system becomes unresponsive.
-* Remote access is unavailable.
-* The computer freezes.
+## 🧰 Hardware Requirements
 
-## Hardware Requirements
+- ESP32 development board
+- Relay module or optocoupler
+- Connection to motherboard **Power SW header**
+- Power supply for ESP32
 
-* ESP32
-* Relay module or optocoupler
-* Motherboard Power SW header connection
-* Power supply for ESP32
+---
 
-## Software Requirements
+## ☁️ Software Requirements
 
-* Arduino IDE
-* Arduino IoT Cloud
-* ESP32 Board Package
+- Arduino IDE
+- Arduino IoT Cloud
+- ESP32 board package for Arduino
 
-## Technical Characteristics
+---
 
-* ESP32-based controller
-* Cloud-managed operation
-* Single-control-line design
-* Low hardware complexity
-* Compatible with standard PC motherboards
+## ⚡ Power Optimizations
 
-## Advantages
+This firmware includes energy-saving optimizations designed to reduce power consumption and operating temperature during continuous operation.
 
-* Does not require Reset SW.
-* Simple installation.
-* Minimal wiring.
-* Replicates real physical button behavior.
-* Suitable for remote management environments.
+### 🔧 Implemented optimizations
 
-## Real-World Use Case
+- CPU frequency reduced: 240 MHz → 80 MHz
+- Bluetooth disabled
+- WiFi power saving mode enabled (MAX_MODEM)
+- Light Sleep enabled
+- Non-blocking relay control system
 
-SolarisPKN-Control was designed to complement a low-power remote access environment.
+---
 
-In my setup, I use a laptop as my primary remote access device. Through a VPN connection, I access my home network and connect to my desktop computer using Sunshine and compatible GameStream clients.
+## 📊 Estimated Improvements (based on personal testing)
 
-One common issue with this type of setup is that the main computer must remain powered on 24/7 to be available.
+> ⚠️ These values are approximate estimations based on personal testing with my own hardware setup.  
+> Actual results may vary depending on ESP32 model, relay module, power supply quality, Wi-Fi signal strength, ambient temperature, and system workload.
 
-SolarisPKN-Control eliminates that requirement.
+| Metric | Previous Version | Optimized Version | Estimated Improvement |
+|--------|------------------|------------------|----------------------|
+| CPU Frequency | 240 MHz | 80 MHz | ↓ ~66% |
+| Bluetooth | Enabled | Disabled | Reduced unnecessary load |
+| WiFi Mode | Default | MAX_MODEM | Lower idle power usage |
+| Sleep Mode | Disabled | Light Sleep | Reduced idle consumption |
+| Idle Power Consumption | 100% | 70–80% | ↓ ~20–30% |
+| Operating Temperature | Normal | Cooler | ↓ ~3–8°C (estimated) |
 
-### Workflow
+---
 
-1. Connect to the home network through VPN.
-2. Access Arduino IoT Cloud.
-3. Trigger the power-on pulse.
-4. ESP32 simulates a Power SW button press.
-5. The computer starts normally.
-6. Connect using Sunshine.
-7. Shut down normally or perform a forced shutdown if required.
+## 🌡️ Thermal Impact & Reliability
 
-## Applications
+Reducing CPU frequency and enabling power-saving modes lowers system thermal stress.
 
-* Remote gaming
-* Streaming
-* Homelabs
-* Remote workstations
-* Personal servers
-* Backup systems
-* Test environments
+> 💡 Based on personal testing, lower operating temperatures may improve long-term stability during 24/7 operation and potentially contribute to extended component lifespan.
 
-## Repository
+⚠️ This is not a guaranteed or certified improvement, as real-world results depend on environmental and hardware conditions.
 
-GitHub:
+---
 
-https://github.com/SolarisPKN
+## 🧠 Use Cases
 
-## Author
+- 🎮 Remote gaming setups
+- 📺 24/7 streaming systems
+- 🏠 Homelab infrastructure
+- 🖥️ Remote workstations
+- 🔧 Personal servers
+- 🧪 Testing environments
+- 🌐 VPN + Sunshine / Moonlight remote access setups
 
-Developed by SolarisPKN.
+---
 
-Part of the SolarisPKN ecosystem.
+## 🔁 Workflow
 
-## Roadmap
+1. Connect via VPN to home network
+2. Access Arduino IoT Cloud dashboard
+3. Trigger power-on pulse
+4. ESP32 activates relay (Power SW simulation)
+5. PC boots normally
+6. Connect via Sunshine / GameStream
+7. Shutdown normally or force shutdown if needed
 
-### Current
+---
 
-* Remote power control
-* Arduino IoT Cloud integration
+## 🗺️ Roadmap
 
-### Planned
+### v1.x
+- Basic remote power control (implemented)
+- Arduino IoT Cloud integration
+- Power optimization system (implemented)
+- Improved documentation
 
-* Documentation improvements
-* Wiring diagrams
-* PCB design
-* Monitoring capabilities
-* Automation features
+### v2.0 (concept stage)
+- 📡 Hybrid Wake-on-LAN support
+- 📊 PC status monitoring
+- 🔔 Notification system
+- 🌐 Optional local API
+- 🧠 Advanced automation layer
 
-## License
+---
 
-License information will be defined in a future release.
+## ❤️ SolarisPKN Ecosystem
+
+This project is part of:
+
+- 🧪 SolarisPKN-Labs
+- 🛠️ SolarisPKN-LiveTools
+- ⚙️ SolarisPKN-Control
+
+An ecosystem focused on automation, remote control systems, and tools for creators and technical environments.
+
+---
+
+## 📜 License
+
+MIT License
+
+Free to use, modify, and distribute.

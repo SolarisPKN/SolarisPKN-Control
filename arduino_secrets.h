@@ -1,3 +1,7 @@
-#define SECRET_DEVICE_KEY "Pass ESP32"
-#define SECRET_OPTIONAL_PASS "Pass WIFI"
-#define SECRET_SSID "Name WIFI"
+// ============================================================
+//  CREDENTIALS (do not share publicly)
+// ============================================================
+
+#define SECRET_DEVICE_KEY      "your-device-key"
+#define SECRET_OPTIONAL_PASS   "your-wifi-password"
+#define SECRET_SSID            "your-wifi-ssid"

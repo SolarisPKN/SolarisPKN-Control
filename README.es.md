@@ -1,139 +1,170 @@
-# SolarisPKN-Control
+<p align="right">
+🇺🇸 English | 🇪🇸 Español
+</p>
 
-🇦🇷 Español | 🇺🇸 [English](README.md)
+# ⚡ SolarisPKN-Control
 
-## Descripción General
+## 🌐 Español
 
-SolarisPKN-Control es una solución de control remoto de encendido para computadoras basada en ESP32 y Arduino IoT Cloud.
+🚀 **SolarisPKN-Control** es un sistema de control remoto de encendido para PC basado en ESP32 + Arduino IoT Cloud.
 
-El proyecto permite encender, apagar o forzar el apagado de una computadora simulando pulsaciones físicas sobre el conector Power SW de la motherboard.
+Permite encender, apagar o forzar el apagado de una computadora simulando el comportamiento real del botón **Power SW** de la motherboard, sin necesidad de modificar el sistema operativo ni usar software en el host.
 
-A diferencia de muchas soluciones similares, SolarisPKN-Control no requiere utilizar el conector Reset SW. Todas las acciones se realizan utilizando únicamente el conector Power SW, reproduciendo exactamente el comportamiento del botón físico del gabinete.
+Forma parte del ecosistema **SolarisPKN**, orientado a crear herramientas de automatización, control remoto y optimización para entornos de gaming, streaming y homelabs.
 
-## Estado Actual
+---
 
-⚠️ Este proyecto es funcional y se encuentra en desarrollo activo.
+## 🎯 Objetivo del proyecto
 
-Implementación actual:
+El objetivo de SolarisPKN-Control es permitir el control físico remoto de una computadora de forma segura, eficiente y de bajo consumo energético, eliminando la necesidad de mantener el equipo encendido permanentemente.
 
-* Encendido remoto.
-* Solicitud de apagado normal.
-* Apagado forzado.
-* Integración con Arduino IoT Cloud.
-* Control mediante ESP32.
+---
 
-Futuras versiones podrán incorporar funciones adicionales de monitoreo, automatización y administración remota.
+## ✨ Características
 
-## Características
+- ⚡ Encendido remoto de PC
+- 🔌 Apagado normal mediante pulsación corta
+- 🛑 Apagado forzado mediante pulsación prolongada
+- ☁️ Control vía Arduino IoT Cloud
+- 📡 Comunicación mediante ESP32
+- 🧠 Sistema optimizado para bajo consumo energético
+- 🔁 Control no bloqueante del relé
+- 🧩 Configuración modular y editable
 
-### Encendido y Apagado Normal
+---
 
-Un pulso corto cierra el circuito Power SW durante aproximadamente 500 ms.
+## 🔌 Funcionamiento
 
-Este comportamiento equivale a presionar brevemente el botón de encendido del gabinete y permite:
+El sistema simula dos tipos de interacción física:
 
-* Encender la computadora.
-* Solicitar un apagado normal del sistema operativo.
-* Reanudar estados de suspensión compatibles.
+### 🔘 Pulsación corta (500 ms)
+Equivale a presionar el botón de encendido normalmente:
 
-### Apagado Forzado
+- Encender la PC
+- Solicitar apagado del sistema operativo
+- Reanudar suspensión (según BIOS/OS)
 
-Un pulso largo mantiene cerrado el circuito Power SW durante aproximadamente 15 segundos.
+### 🔴 Pulsación larga (15 s)
+Equivale a mantener presionado el botón físico:
 
-Este comportamiento equivale a mantener presionado el botón físico hasta que la motherboard fuerce el apagado del equipo.
+- Apagado forzado del sistema
+- Útil en cuelgues o bloqueos
+- No depende del sistema operativo
 
-Resulta útil cuando:
+---
 
-* El sistema operativo deja de responder.
-* No existe acceso remoto disponible.
-* La computadora se bloquea.
+## 🧰 Hardware requerido
 
-## Hardware Requerido
+- ESP32
+- Módulo relé o optoacoplador
+- Conexión al header **Power SW** de la motherboard
+- Fuente de alimentación para el ESP32
 
-* ESP32
-* Módulo relé u optoacoplador
-* Conexión al header Power SW de la motherboard
-* Fuente de alimentación para el ESP32
+---
 
-## Software Requerido
+## ☁️ Software requerido
 
-* Arduino IDE
-* Arduino IoT Cloud
-* Paquete de placas ESP32
+- Arduino IDE
+- Arduino IoT Cloud
+- Soporte ESP32 en Arduino
 
-## Características Técnicas
+---
 
-* Controlador basado en ESP32
-* Operación gestionada desde la nube
-* Diseño de una sola línea de control
-* Baja complejidad de hardware
-* Compatible con motherboards estándar
+## ⚡ Optimizaciones de energía
 
-## Ventajas
+Este firmware incluye optimizaciones diseñadas para reducir consumo energético y temperatura de operación durante uso continuo.
 
-* No requiere utilizar Reset SW.
-* Instalación sencilla.
-* Menor cantidad de cableado.
-* Comportamiento idéntico al botón físico.
-* Ideal para administración remota.
+### 🔧 Cambios implementados
 
-## Caso de Uso Real
+- CPU reducida de 240 MHz → 80 MHz
+- Bluetooth deshabilitado
+- WiFi en modo ahorro (MAX_MODEM)
+- Light Sleep habilitado
+- Control de relé no bloqueante
 
-SolarisPKN-Control fue diseñado para complementar un entorno de acceso remoto de bajo consumo energético.
+---
 
-En mi caso utilizo una notebook como dispositivo principal de acceso remoto. Mediante una conexión VPN accedo a mi red doméstica y me conecto a mi computadora de escritorio utilizando Sunshine y clientes compatibles con GameStream.
+## 📊 Estimaciones de mejora (basado en pruebas personales)
 
-Uno de los problemas habituales de este tipo de configuraciones es que la computadora principal debe permanecer encendida las 24 horas para estar disponible.
+> ⚠️ Estas métricas son estimaciones obtenidas durante pruebas personales con mi configuración de hardware.  
+> Los resultados pueden variar según el modelo de ESP32, módulo de relé, fuente de alimentación, calidad de señal Wi-Fi, temperatura ambiente y carga del sistema.
 
-SolarisPKN-Control elimina esa necesidad.
+| Métrica | Versión anterior | Versión optimizada | Mejora estimada |
+|--------|------------------|--------------------|------------------|
+| Frecuencia CPU | 240 MHz | 80 MHz | ↓ ~66% |
+| Bluetooth | Activo | Desactivado | ↓ consumo innecesario |
+| WiFi | Default | MAX_MODEM | ↓ consumo en reposo |
+| Modo Sleep | Desactivado | Light Sleep | ↓ consumo idle |
+| Consumo en reposo | 100% | 70–80% | ↓ ~20–30% |
+| Temperatura operativa | Normal | Más baja | ↓ ~3–8°C (estimado) |
 
-### Flujo de Trabajo
+---
 
-1. Conectarse a la red doméstica mediante VPN.
-2. Acceder a Arduino IoT Cloud.
-3. Activar el pulso de encendido.
-4. El ESP32 simula una pulsación del botón Power.
-5. La computadora inicia normalmente.
-6. Conectarse mediante Sunshine.
-7. Apagar normalmente o forzar el apagado si es necesario.
+## 🌡️ Impacto en temperatura y durabilidad
 
-## Aplicaciones
+La reducción de frecuencia de CPU y la activación de modos de ahorro energético reduce el estrés térmico del sistema.
 
-* Gaming remoto
-* Streaming
-* Homelabs
-* Estaciones de trabajo remotas
-* Servidores personales
-* Equipos de respaldo
-* Entornos de pruebas
+> 💡 En base a pruebas personales, una menor temperatura de operación puede contribuir a una mayor estabilidad en funcionamiento 24/7 y potencialmente extender la vida útil de los componentes electrónicos.
 
-## Repositorio
+⚠️ No se trata de una mejora garantizada ni certificada, ya que depende de factores ambientales y de hardware.
 
-GitHub:
+---
 
-https://github.com/SolarisPKN
+## 🧠 Casos de uso
 
-## Autor
+- 🎮 Gaming remoto
+- 📺 Streaming 24/7
+- 🏠 Homelabs
+- 🖥️ Estaciones de trabajo remotas
+- 🔧 Servidores personales
+- 🧪 Entornos de testing
+- 🌐 Acceso remoto con VPN + Sunshine / Moonlight
 
-Desarrollado por SolarisPKN.
+---
 
-Proyecto perteneciente al ecosistema SolarisPKN.
+## 🔁 Flujo de uso
 
-## Hoja de Ruta
+1. Conexión a red mediante VPN
+2. Acceso a Arduino IoT Cloud
+3. Activación de pulso de encendido
+4. ESP32 activa relé (Power SW)
+5. La PC inicia normalmente
+6. Acceso remoto mediante Sunshine / GameStream
+7. Apagado normal o forzado según necesidad
 
-### Actual
+---
 
-* Control remoto de energía
-* Integración con Arduino IoT Cloud
+## 🗺️ Roadmap
 
-### Planificado
+### v1.x
+- Control remoto básico (implementado)
+- Integración con Arduino IoT Cloud
+- Optimización energética (implementada)
+- Documentación mejorada
 
-* Mejoras de documentación
-* Diagramas de conexión
-* Diseño PCB
-* Capacidades de monitoreo
-* Funciones de automatización
+### v2.0 (en desarrollo conceptual)
+- 📡 Wake-on-LAN híbrido
+- 📊 Monitor de estado de PC
+- 🔔 Notificaciones de estado
+- 🌐 API local opcional
+- 🧠 Automatización avanzada
 
-## Licencia
+---
 
-La licencia del proyecto será definida en futuras versiones.
+## ❤️ Ecosistema SolarisPKN
+
+Este proyecto forma parte de:
+
+- 🧪 SolarisPKN-Labs
+- 🛠️ SolarisPKN-LiveTools
+- ⚙️ SolarisPKN-Control
+
+Un ecosistema enfocado en automatización, control remoto y herramientas para creadores de contenido y entornos técnicos.
+
+---
+
+## 📜 Licencia
+
+MIT License
+
+Libre para usar, modificar y compartir.
