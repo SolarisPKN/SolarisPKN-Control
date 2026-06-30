@@ -1,5 +1,5 @@
 <p align="right">
-🇺🇸 English | 🇪🇸 Español
+[🇺🇸 English](README.md) | [🇪🇸 Español](README.es.md
 </p>
 
 # ⚡ SolarisPKN-Control
