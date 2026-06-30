@@ -1,6 +1,6 @@
-<p align="right">
-🇺🇸 English | 🇪🇸 Español
-</p>
+<div><p align="right">
+[🇺🇸 English](README.md) | [🇪🇸 Español](README.es.md)
+</p><div/>
 
 # ⚡ SolarisPKN-Control
 
